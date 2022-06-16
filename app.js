@@ -80,20 +80,39 @@ window.addEventListener("DOMContentLoaded", () => {
     displayMenuItems(menu);
 })
 
-function displayMenuItems(menuItem) {
-    let displayMenu = menuItem.map((item) => {
+
+
+filterBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+        const catergory = e.currentTarget.dataset.id
+        const menuCategory = menu.filter((menuItem) => {
+            if (menuItem.category === catergory) {
+                return menuItem
+            }
+        })
+        if (catergory === "all") {
+            diplayMenuItems(menu);
+        } else {
+            diplayMenuItems(menuCategory);
+        }
+    })
+})
+
+
+function diplayMenuItems(menuItems) {
+    let displayMenu = menuItems.map((item) => {
         return `<article class="menu-item">
-      <img src="${item.img}" alt="${item.title}" class="photo" />
-      <div class="item-info">
-          <header>
-              <h4>${item.title}</h4>
-              <h4 class="price">$${item.price}</h4>
-          </header>
-          <p class="item-text">
-          ${item.desc}    
-          </p>
-      </div>
-  </article>`;
+    <img src="${item.img}" alt="${item.title}" class="photo" />
+    <div class="item-info">
+        <header>
+            <h4>${item.title}</h4>
+            <h4 class="price">$${item.price}</h4>
+        </header>
+        <p class="item-text">
+        ${item.desc}    
+        </p>
+    </div>
+</article>`;
     })
     displayMenu = displayMenu.join("");
     sectionCenter.innerHTML = displayMenu;
